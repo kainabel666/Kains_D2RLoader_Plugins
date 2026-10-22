@@ -1,0 +1,3 @@
+code	gamble	price
+rin	1	0
+amu	1	0

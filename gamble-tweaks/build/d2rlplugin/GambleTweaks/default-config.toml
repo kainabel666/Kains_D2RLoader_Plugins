@@ -1,0 +1,61 @@
+# gamble-tweaks default config.
+# D2RLoader writes this to d2rloader/config/gamble-tweaks.toml if it is missing,
+# then the plugin reads it. Each feature no-ops when its toggle is false, so they
+# can be enabled independently. Changes take effect on the next game start.
+
+[gamble-tweaks]
+# Feature A: show only bases listed in gamble.txt (stop forcing a ring and an
+# amulet into the first two slots). Remove rin/amu from gamble.txt to stop them
+# appearing at all.
+gamble_window_strict_gambletxt = true
+
+# Feature B: honour a per-base constant gamble price from the plugin's gamble
+# table (data/global/excel/d2rloader/gamble-tweaks/gamble.txt). Rows use the
+# NORMAL-tier code (e.g. "cap" also prices "xap"/"uap"); price 0 = game formula.
+use_constant_gamble_price = true
+
+# Feature B: price every base by its own "gamble cost" column (weapons/armor/misc.txt,
+# normal-tier row) as a flat constant, the way rings and amulets are priced. A plugin
+# table price above 0 still wins; a base with no gamble cost keeps the game formula.
+use_item_gamble_cost = true
+
+# Feature C: ItemStatCost.txt row id of the stat that reduces gambling cost.
+# 0 = disabled. The value is read from the player (all equipped/active sources).
+gamble_cost_reduction_stat_id = 0
+
+# How that stat's value is read: true = percent reduction, false = flat gold.
+gamble_cost_reduction_is_percent = true
+
+# Most the stat can take off, in percent of the price (also caps flat mode).
+gamble_cost_reduction_cap_percent = 50
+
+# Do not apply the normal "reduced prices" stat (item_reducedprices) to gambling.
+ignore_vendor_reduction_for_gamble = true
+
+# Feature D: ItemStatCost.txt row id of the "reduced value" stat. 0 = disabled.
+# Every item bought from a gambler gets this stat (percent below, by quality); the
+# item's sell price to vendors drops by that percent after the game's calculation.
+# Only the item's own value counts. The row needs Save Bits (7 is enough for 100)
+# so it stays on the item, and Saved = 0 so it is never written to the character.
+reduced_value_stat_id = 0
+reduced_value_magic = 25
+reduced_value_rare = 33
+reduced_value_set = 33
+reduced_value_unique = 50
+
+# Settings that must match between host and client in TCP/IP games.
+[d2rl]
+match = [
+  "gamble-tweaks.gamble_window_strict_gambletxt",
+  "gamble-tweaks.use_constant_gamble_price",
+  "gamble-tweaks.use_item_gamble_cost",
+  "gamble-tweaks.gamble_cost_reduction_stat_id",
+  "gamble-tweaks.gamble_cost_reduction_is_percent",
+  "gamble-tweaks.gamble_cost_reduction_cap_percent",
+  "gamble-tweaks.ignore_vendor_reduction_for_gamble",
+  "gamble-tweaks.reduced_value_stat_id",
+  "gamble-tweaks.reduced_value_magic",
+  "gamble-tweaks.reduced_value_rare",
+  "gamble-tweaks.reduced_value_set",
+  "gamble-tweaks.reduced_value_unique",
+]

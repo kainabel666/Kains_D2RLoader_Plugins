@@ -1,0 +1,30 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "MSVC",
+	"compiler-id" : "MSVC",
+	"compiler-simulate-id" : "",
+	"config" : "Release",
+	"cxx-modules" : {},
+	"database-info" : null,
+	"dir-cur-bld" : "M:/Tools/RE/d2rl-plugins/gamble-tweaks/build",
+	"dir-cur-src" : "M:/Tools/RE/d2rl-plugins/gamble-tweaks",
+	"dir-top-bld" : "M:/Tools/RE/d2rl-plugins/gamble-tweaks/build",
+	"dir-top-src" : "M:/Tools/RE/d2rl-plugins/gamble-tweaks",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"M:\\Tools\\RE\\d2rl-plugins\\third_party\\PluginSDK\\include"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "M:/Tools/RE/d2rl-plugins/gamble-tweaks/build/CMakeFiles/GambleTweaks.dir",
+	"sources" : 
+	{
+		"CMakeFiles/GambleTweaks.dir/src/gamble_tweaks.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "M:/Tools/RE/d2rl-plugins/gamble-tweaks/src/gamble_tweaks.cpp"
+		}
+	}
+}

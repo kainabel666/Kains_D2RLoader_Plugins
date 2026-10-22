@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "CMakeFiles\\GambleTweaks.dir\\src\\gamble_tweaks.cpp.obj",
+            "outputs": [
+                "CMakeFiles\\GambleTweaks.dir\\src\\gamble_tweaks.cpp.obj.ddi"
+            ],
+            "requires": []
+        }
+    ]
+}
