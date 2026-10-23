@@ -1,38 +1,7 @@
 # gamble-tweaks — setup checklist
 
-Everything you have to do yourself to use the plugin. Each feature is off or
-harmless until you do its steps. Use a throwaway character until all features
-are tested: the plugin changes prices and adds a stat that is saved on items.
 
-## 1. Build and install
-
-1. Run `build.cmd` in this folder. It uses Visual Studio at `M:\Tools\Visual Studio`.
-2. Copy `build\d2rl-gamble-tweaks.dll` to `G:\Diablo II Resurrected\d2rloader\plugins\`.
-3. Start the game once. D2RLoader writes the config to
-   `G:\Diablo II Resurrected\d2rloader\config\gamble-tweaks.toml`. Edit that copy;
-   `config\gamble-tweaks.toml` in this folder is only the default.
-4. Config changes take effect the next time the game starts.
-5. For TCP/IP games, the host and every client need the same DLL and the same
-   config values. All the settings are in the config's `[d2rl] match` list.
-
-## 2. Check it loaded
-
-Type `gamble-tweaks` in the console. You should see `priceHook=1`, plus `window=1`
-and `noVendor=1` if those options are on, and `active=1` once feature D is set up.
-If any of them shows 0, look in the D2RLoader log for "unexpected bytes". That
-means the game build is different and that feature was skipped.
-
-## 3. Feature A — gamble window shows only gamble.txt
-
-- Config: `gamble_window_strict_gambletxt = true` (on by default).
-- Nothing else is needed. The window no longer forces a ring and an amulet into it.
-- **To stop rings and amulets from appearing at all**, remove the `rin` and `amu`
-  rows from the game's `data/global/excel/gamble.txt` in your mod. If you keep them,
-  they still appear, but only when gamble.txt picks them at random.
-- After buying a ring or amulet, the free slot is still refilled with a new ring
-  or amulet. Changing that would need another hook.
-
-## 4. Feature B — fixed gamble price per base
+## 1. Feature B — fixed gamble price per base
 
 Prices are looked up by the **normal-tier** code: the `cap` row also prices War
 Hat (`xap`) and Shako (`uap`). The first match wins:
@@ -52,7 +21,7 @@ Hat (`xap`) and Shako (`uap`). The first match wins:
    - A base whose `gamble cost` is 0 or blank keeps the game's formula price.
 3. **The game's formula price**, if neither of the above applies.
 
-## 5. Feature C — new stat lowers gamble prices
+## 2. Feature C — new stat lowers gamble prices
 
 1. Add a new row to your mod's `ItemStatCost.txt` (see section 7 for how).
 2. Set `gamble_cost_reduction_stat_id` to that row's id.
@@ -67,7 +36,7 @@ Hat (`xap`) and Shako (`uap`). The first match wins:
    stat (`item_reducedprices`) no longer lowers gamble prices. Normal buying and
    selling still use it.
 
-## 6. Feature D — "reduced value" on gambled items
+## 3. Feature D — "reduced value" on gambled items
 
 Every item bought from a gambler gets this stat. Its sell price to vendors drops
 by that percent, after the game has finished its own calculation. Only the item's
@@ -92,7 +61,7 @@ own value counts; it is not added to the character's save.
    - A gambled item socketed into another item (e.g. a jewel) would also lower
      the host item's sell price, because socketed stats count toward the item.
 
-## 7. Adding an ItemStatCost.txt row
+## 4. Adding an ItemStatCost.txt row
 
 - Add rows at the **end** of the file so existing stat ids don't move. The new
   row's id is its position (rows count from 0); it is the number to put in the config.
@@ -101,7 +70,7 @@ own value counts; it is not added to the character's save.
   the save columns as listed above. Check `Saved` in the copy: feature D needs it at 0.
 - Features C and D each need their **own** row.
 
-## 8. Test plan (throwaway character)
+## 5. Test plan (throwaway character)
 
 1. A: with `rin`/`amu` removed from gamble.txt, open a gambler several times. No
    ring or amulet appears.
