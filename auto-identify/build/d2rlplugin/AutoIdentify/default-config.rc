@@ -1,0 +1,3 @@
+#include <D2RLPlugin/resource.h>
+
+D2RL_PLUGIN_CONFIG_RESOURCE_ID RCDATA "M:/Tools/RE/d2rl-plugins/auto-identify/build/d2rlplugin/AutoIdentify/default-config.toml"

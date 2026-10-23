@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "CMakeFiles\\AutoIdentify.dir\\src\\auto_identify.cpp.obj",
+            "outputs": [
+                "CMakeFiles\\AutoIdentify.dir\\src\\auto_identify.cpp.obj.ddi"
+            ],
+            "requires": []
+        }
+    ]
+}

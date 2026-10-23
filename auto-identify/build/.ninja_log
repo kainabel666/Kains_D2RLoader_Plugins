@@ -1,0 +1,18 @@
+# ninja log v7
+38	130	8143688094006952	CMakeFiles/AutoIdentify.dir/src/auto_identify.rc.res	b054c9884422004b
+44	150	8143688094077390	CMakeFiles/AutoIdentify.dir/d2rlplugin/AutoIdentify/default-config.rc.res	733a137de4f41b85
+45	175	8143688593706494	CMakeFiles/AutoIdentify.dir/src/auto_identify.cpp.obj.ddi	8f1a36d9f589aed
+175	209	8143688595007376	CMakeFiles/AutoIdentify.dir/CXX.dd	917129a288bf1ac6
+175	209	8143688595007376	CMakeFiles/AutoIdentify.dir/CXXModules.json	917129a288bf1ac6
+175	209	8143688595007376	CMakeFiles/AutoIdentify.dir/src/auto_identify.cpp.obj.modmap	917129a288bf1ac6
+211	920	8143688595359571	CMakeFiles/AutoIdentify.dir/src/auto_identify.cpp.obj	94770e8212b0c7c5
+920	1208	8143688602455855	d2rl-auto-identify.dll	175ea4000ff04862
+920	1208	8143688602455855	d2rl-auto-identify.lib	175ea4000ff04862
+59	189	8144213003222771	CMakeFiles/AutoIdentify.dir/src/auto_identify.cpp.obj.ddi	8f1a36d9f589aed
+66	195	8144213003285773	CMakeFiles/AutoIdentify.dir/d2rlplugin/AutoIdentify/default-config.rc.res	733a137de4f41b85
+190	238	8144213004521025	CMakeFiles/AutoIdentify.dir/CXX.dd	917129a288bf1ac6
+190	238	8144213004521025	CMakeFiles/AutoIdentify.dir/CXXModules.json	917129a288bf1ac6
+190	238	8144213004521025	CMakeFiles/AutoIdentify.dir/src/auto_identify.cpp.obj.modmap	917129a288bf1ac6
+246	987	8144213005082390	CMakeFiles/AutoIdentify.dir/src/auto_identify.cpp.obj	94770e8212b0c7c5
+987	1235	8144213012502153	d2rl-auto-identify.dll	175ea4000ff04862
+987	1235	8144213012502153	d2rl-auto-identify.lib	175ea4000ff04862
