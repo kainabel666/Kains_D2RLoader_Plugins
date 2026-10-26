@@ -1,0 +1,47 @@
+# pSpell Extender settings. Restart the game after a change.
+# README.md explains every feature and the txt columns each one reads.
+
+[pspell-ext]
+# false = every item with pSpell 16-30 is refused.
+enabled = true
+# true = write details and warnings to the log. Turn on only to track down a problem.
+diagnostics = false
+
+# ---- pSpell numbers -----------------------------------------------------------
+# Each feature answers to one pSpell value (16-30) in misc/weapons/armor.txt.
+# Change a number only if another plugin already uses it. If two features share
+# a number, the later one moves to the next free number (diagnostics shows which).
+
+# Cast skill calc1 at level calc2 on the enemy you aim at, or the nearest one.
+target_pspell = 16
+# Cast skill calc1 at level calc2 where the player stands.
+position_pspell = 17
+# Open a red portal to level calc2. calc1 = level it must be used in (0 = any).
+portal_pspell = 18
+# Learn one point in skill calc1 (the player's own class skills only).
+tome_pspell = 19
+# Summon calc3 Evil Urn packs in front of the player. calc1 = monster (0 = the
+# level's own), calc2 = 1 for always unique.
+summon_pspell = 20
+# Same packs, but they appear with the next superunique in this game.
+ambush_pspell = 21
+# Show message calc1 in the NPC speech box. The item is kept.
+message_pspell = 22
+
+# ---- Messages -----------------------------------------------------------------
+# String key for message number N. Keep exactly one %d (or %04d).
+message_format = "scrollMsg%04d"
+# itemstatcost.txt row that holds the message number when calc1 is blank. 0 = off.
+message_stat = 0
+
+# ---- Targeting and distances (in subtiles) ------------------------------------
+# Aim first at the monster under the cursor or controller target.
+use_hover_target = true
+# Skip enemies behind walls.
+line_of_sight = true
+# How far to look for the nearest enemy (1-100).
+search_radius = 40
+# With no enemy, the cast lands this far in front of the player (1-50).
+front_distance = 5
+# How far in front of the player summoned packs appear (1-100).
+summon_distance = 20
