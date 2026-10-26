@@ -1,0 +1,35 @@
+# missile-hitcalc default config.
+# D2RLoader writes this to d2rloader/config/missile-hitcalc.toml if it is missing,
+# then the plugin reads it. Each hook no-ops when its toggle is false. Changes take
+# effect on the next game start.
+
+[missile-hitcalc]
+# pSrvHitFunc 5 (nova ring, server): spawn SHitCalc1 missiles (HitSubMissile1) evenly
+# around the hit point instead of stepping the 64-direction table by sHitPar1. A row whose
+# SHitCalc1 is empty or evaluates to <= 0 stays vanilla.
+srvhit05_count_from_calc = true
+
+# pCltHitFunc 4 (nova ring, client): same, using CHitCalc1 / CltHitSubMissile1 / cHitPar1.
+# The server ring does the damage but is not drawn; the client ring is what you see. Keep
+# CHitCalc1 identical to SHitCalc1, and lvl-only, so other players see the same count.
+clthit04_count_from_calc = true
+
+# Most missiles one ring can spawn (1..64; 64 is the direction table's resolution).
+max_ring_count = 64
+
+# How far from the hit point each ring missile is aimed (1..99). 30 is the game's own ring.
+# Used when the ring missile's missiles.txt Radius is empty or <= 0; a Radius calc wins.
+# Applies only when the calc sets the count (vanilla rings are unchanged).
+ring_radius = 30
+
+# Log each ring (missile, lvl, calc result, count) to the plugin log, up to 256 per side.
+log_calls = false
+
+# Settings that must match between host and client in TCP/IP games.
+[d2rl]
+match = [
+  "missile-hitcalc.srvhit05_count_from_calc",
+  "missile-hitcalc.clthit04_count_from_calc",
+  "missile-hitcalc.max_ring_count",
+  "missile-hitcalc.ring_radius",
+]
