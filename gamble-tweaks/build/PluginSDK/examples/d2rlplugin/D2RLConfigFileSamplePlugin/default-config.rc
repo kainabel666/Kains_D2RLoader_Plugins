@@ -1,3 +1,0 @@
-#include <D2RLPlugin/resource.h>
-
-D2RL_PLUGIN_CONFIG_RESOURCE_ID RCDATA "M:/Tools/RE/d2rl-plugins/gamble-tweaks/build/PluginSDK/examples/d2rlplugin/D2RLConfigFileSamplePlugin/default-config.toml"
