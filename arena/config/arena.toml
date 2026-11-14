@@ -1,0 +1,209 @@
+# arena default config.
+# D2RLoader writes this to d2rloader/config/arena.toml if it is missing.
+# Changes take effect on the next game start.
+
+[arena]
+# false = the plugin loads but changes nothing.
+enabled = true
+
+# Clicking an open trapdoor whose partner is still closed: a chat line and the character's refusal voice line.
+sealed_message = "The other trapdoor is still closed."
+# Name shown in front of the chat line.
+sender_name = "Arena"
+# "all" = every player in the game sees the line, "player" = only the one who clicked.
+message_scope = "all"
+# Chat colour code of the line.
+message_color = 4
+# Voice line (sound event of the character): 20 = the "can't use" line, 0 = none.
+refusal_sound = 20
+
+# PvP in the arena levels. false = stock deaths and hostility (gates and trapdoors still work).
+pvp = true
+# A player killed in an arena doesn't die: no corpse, no item/gold/XP loss, no "Press ESC". They are frozen for this
+# many seconds with an on-screen countdown, then come back with full life and mana at a random spawn spot.
+respawn_seconds = 5.0
+# Countdown text; the remaining seconds (one decimal) are added after it.
+respawn_text = "Respawning in"
+# Where the countdown shows: "hud" = big text in the middle of the screen (default), "window" = the old side window
+# (opens a side panel; use it only if the hud text doesn't show).
+countdown_style = "hud"
+# Scoreboard: one line at the top centre of the screen (above the monster health bar) while you stand in an arena:
+# every player in that arena with score (kills/deaths), best first. Hide/show it with the "Show / hide arena
+# scoreboard" key (Controls, category Arena; no key by default) or the console command `arena scoreboard`.
+scoreboard = true
+# Distance from the top of the screen (HD pixels; the monster health bar starts at 63).
+scoreboard_y = 8
+# 1 v 1 (exactly two players in the arena): the duel art (names on the banners, scores in the medallion) instead of
+# the line. false = always the line.
+scoreboard_art = true
+# When a fight ends because the other players left the arena (or the game) and only one player is left, that player
+# sees a countdown and is then sent back to the last act town they were in (Lut Gholein if none this game).
+last_player_return = true
+return_seconds = 5.0
+return_title = "Your opponent left"
+return_text = "Returning to town in"
+# A player alone in an arena who gets no opponent within this many seconds goes back to town the same way. A notice
+# counts down. 0 = stay (there is no other way out of an arena).
+alone_seconds = 60
+# Diagnosis: one log line per damage event on a player in an arena.
+trace_damage = false
+# Diagnosis: the test logs (UI state probes, scoreboard / HUD state, stake trade progress). Off for normal play.
+diagnostics = false
+alone_text = "Waiting for an opponent. Returning to town"
+# Chat line to every player on each arena kill, e.g. "Arena: Kain killed Bob (Kain 3, Bob -1)".
+kill_messages = true
+# Kill bonus: a kill refills kill_bonus_life % of the killer's missing life and kill_bonus_mana % of the missing mana
+# (kills by the player's pets and merc count for the player; teammates get nothing; not the kill that ends a duel). Duels set it with the "Kill bonus" rule row (this
+# is its starting value); kill_bonus is used as is in arena fights without duel rules.
+kill_bonus = false
+kill_bonus_life = 50
+kill_bonus_mana = 75
+# Walk-in duels (two players meeting in an arena, and any Battle Royale that grows from one): kill bonus on / off. Menu and
+# team duels use their "Kill bonus" rule row instead.
+walk_in_kill_bonus = true
+# Respawn spot: never closer than respawn_avoid_death subtiles to where you went down, and if possible not closer than
+# respawn_avoid_enemy to a living enemy; of the rest the spot farthest from the enemies. The level's spawns first,
+# start_spawns only when every spawns spot is too close.
+respawn_avoid_death = 25
+respawn_avoid_enemy = 20
+# Chat line to every player when the arena makes two players hostile (or ends it), e.g.
+# "Arena: Kain and Bob are now hostile."
+hostility_messages = true
+
+# Clean start: when two players become hostile and at every arena respawn, everything on the player except passive
+# skills is removed (buffs, curses, shrine and potion effects, shapeshift forms) and life/mana/stamina are filled.
+clean_start = true
+
+# Potions in the arena, per kind: how many per arena visit (0 = no limit; the count resets when you enter an arena)
+# and the cooldown between two potions of the same kind. other = antidote, thawing and stamina potions.
+[arena.potions]
+healing = 5
+mana = 5
+rejuvenation = 2
+other = 0
+cooldown_seconds = 1.0
+# false = mercenaries can't be given potions in the arena.
+mercenary = false
+
+# Points per arena event (as the 1.10 arena.txt). *_percent = that percentage of the victim's score is added too.
+[arena.score]
+suicide = -1
+player_kill = 3
+player_kill_percent = 0
+player_death = -1
+player_death_percent = 0
+monster_death = -1
+
+# Duels: `arena duel <name>` challenges a player in this game (console, any act); they answer with `arena accept` /
+# `arena decline` (or the Controls keys "Accept / Decline duel challenge", category Arena; no key by default).
+# On accept both are moved into a free arena, frozen for countdown_seconds, then fight; the first to reach `points`
+# arena score wins (player_kill / player_death above). In a duel every death in the fight counts as a kill for the other player (pets, curses, reflected damage). Leaving
+# the arena or the game = the other player wins. end_seconds after the win both go back to their last act town.
+# Nobody can enter an arena by its trapdoor while a duel runs there.
+# walk_in: a second player coming into an arena by its trapdoor starts a duel at these points: both are placed on
+# different spawn spots, frozen through the countdown, then fight. walk_in_extras more players can walk into it (a free
+# for all; 0-2, 0 = nobody else gets in): during the countdown they start at 0, after it at join_score, and they are
+# frozen and can't be hit for join_protect_seconds after being placed. A member of anyone's party inside is refused.
+# A duel started with `arena duel` stays 1 v 1. false = open fights as before (more than two players possible).
+# player_menu: clicking another player in town opens Trade / Duel / Cancel instead of the trade request straight away.
+# Duel challenges them (the wager window opens when they accept); they get an Accept / Decline popup.
+[arena.duel]
+enabled = true
+player_menu = true
+walk_in = true
+walk_in_extras = 2
+# Duel rule "Opponent on map: in sight": which collision bits block sight (4 = missile barrier, as the game's own
+# targeting; try 5 or 7 if walls or pillars don't hide the opponent).
+map_sight_mask = 4
+join_score = -1
+join_protect_seconds = 3
+points = 9
+invite_seconds = 30
+countdown_seconds = 5
+end_seconds = 3
+# Both players must be in the arena within this many seconds (loading screens), or the duel is cancelled.
+arrive_seconds = 60
+# A player coming from another act sees a loading screen. The game's "loaded" signal arrives before the HD assets, so:
+# loading_screen_check = true: that player's game waits until its loading screen (the one with the bar) has closed,
+# then loading_screen_extra_seconds more. If no loading screen shows within loading_screen_wait_seconds, or the check is
+# off, the fixed cross_act_extra_seconds wait is used instead. Same-act duels and walk-ins don't wait.
+loading_screen_check = true
+loading_screen_extra_seconds = 1
+loading_screen_wait_seconds = 5
+cross_act_extra_seconds = 5
+busy_message = "A duel is going on in this arena."
+
+# Gold wagers: `arena duel <name> <gold>` challenges for that much gold each; both must carry it in their inventory.
+# On accept it is held aside (saved on the character, it can't be spent); the winner gets both stakes into gold, then stash
+# gold, the rest is kept and paid into gold when there is room. Leaving the game during the countdown or the fight loses
+# the stake; a cancelled duel returns it. max_gold 0 = no limit. stake_stat / winnings_stat = the itemstatcost rows the
+# mod adds (arena/tools/build_data.py); change them only together with the data.
+[arena.wager]
+enabled = true
+max_gold = 0
+stake_stat = 368
+winnings_stat = 369
+
+# Pets: the Necromancer's Iron Golem and the Warlock's bound demons don't die in the arena. When one is "killed" it
+# is healed, stands still with stun stars and can't be hit, and comes back next to its owner at the owner's next arena
+# respawn (or where it stands when the owner leaves the arena). Same pet, same stats and items.
+# all_golems = true: clay, blood and fire golems too.
+# hold_when_owner_down: while a player is down, all their living pets and their merc stand still with stun stars and
+# can't attack or be hit; they carry on at the respawn with the life they had.
+[arena.pets]
+hold_when_owner_down = true
+enabled = true
+all_golems = false
+
+# Bodies for the Necromancer: while someone is in an arena, `count` dead monsters lie there (near the spawn spots) for
+# Raise Skeleton and Raise Skeletal Mage. A used body is replaced after respawn_seconds. monster = monstats.txt row
+# (0 = skeleton1; it needs corpseSel in monstats2). In the arenas the other corpse skills (Revive, Corpse Explosion,
+# Poison Explosion, Engorge, Find Item, Find Potion, Grim Ward) are refused with refuse_message.
+# They have 1 life. Positions: `bodies` under [arena.level.N] (arena/tools/body_spots.py spreads them over the open
+# floor); with fewer positions than count they are reused. A body appears when its room loads. count: 0-100.
+[arena.bodies]
+enabled = true
+count = 25
+monster = 0
+respawn_seconds = 10
+refuse_message = "Only skeletons and skeletal mages can be raised in the arena."
+
+# One section per arena level (levels.txt id). Spots are x, y pairs in the level's map (DS1 sub-tiles, as listed by
+# tools/ds1tool.py units). gates: a gate sends the player to a random other gate of the same level.
+# trapdoors: pairs, in order (1st <-> 2nd, 3rd <-> 4th ...); an open trapdoor leads to its partner once both are open.
+# spawns: where a killed player comes back (random one); default = the start markers of the original maps.
+
+# Entrances: trapdoors the plugin places in this level (Lut Gholein = 40). Four numbers per trapdoor: x, y (absolute
+# sub-tiles: stand on the spot and type `arena where` in the console), the arena level, and the objects.txt id of the
+# trapdoor (the mod's entrance rows: 587 = labelled "Arena Tomb 1", 588 = "Arena Tomb 2"). Empty = no entrances.
+# There is no way back out of an arena by an object: the fight has to end (or leaving the game); town portals don't
+# work in the arenas (levels.txt PreventTownPortal).
+# Team duels (1.9.0): an obelisk in the entrance level opens the team duel lobby. spot = absolute subtiles (`arena where`;
+# `arena lobby here` puts it next to the host for a try), empty = no obelisk. walk_away = subtiles from it that close the window.
+[arena.lobby]
+# up to 4 obelisks as x, y pairs, all one lobby (1.9.3); place more with `arena lobby here 2` .. `4` (host)
+spot = [5173, 5192, 5154, 5182, 5162, 5207, 5140, 5192]  # 4 obelisks around the town start (user 2026-11-08, `arena lobby here 1-4`; obelisk 3 moved from 5158,5208 to the user's `arena where` 5162,5207: it blocked players entering the game)
+walk_away = 20
+# objects.txt id of the obelisk (the mod's arena_lobby row). Change it when the row sits at another id in your mod.
+object = 589
+
+[arena.entrance]
+level = 40
+# beside the palace (`arena where`, 2026-11-01): first spot -> Arena Tomb 1, second spot -> Arena Tomb 2
+trapdoors = [5050, 5179, 138, 587, 5035, 5116, 139, 588]
+
+# Arena Tomb 1
+[arena.level.138]
+gates = [153, 192, 99, 86, 98, 112, 27, 27]
+trapdoors = [98, 9, 112, 182]
+spawns = [7, 7, 117, 7, 77, 42, 152, 42, 42, 72, 152, 97, 7, 112, 122, 157, 147, 157, 147, 187, 87, 192]
+bodies = [92, 12, 112, 17, 92, 37, 112, 37, 142, 47, 92, 57, 112, 62, 92, 77, 47, 82, 112, 82, 12, 92, 32, 92, 67, 92, 87, 97, 142, 102, 22, 112, 47, 112, 72, 112, 117, 112, 92, 122, 112, 142, 92, 147, 92, 167, 112, 172, 112, 192]
+
+# Arena Tomb 2
+[arena.level.139]
+gates = [116, 69, 74, 74, 101, 118, 46, 26]
+trapdoors = [26, 74, 96, 26]
+spawns = [72, 7, 7, 37, 137, 42, 132, 97, 7, 107, 77, 137]
+# extra spots for the duel start only (respawns use spawns); marked by the user 2026-11-08 with `arena where` (not read before 2.1.x)
+start_spawns = [120, 23, 22, 64, 104, 123, 25, 118, 103, 30, 37, 32]
+bodies = [77, 17, 47, 32, 97, 32, 117, 32, 67, 42, 92, 47, 77, 52, 52, 57, 117, 57, 32, 62, 102, 67, 47, 72, 77, 72, 32, 77, 117, 77, 82, 82, 52, 92, 117, 97, 67, 102, 87, 102, 47, 117, 62, 117, 97, 117, 117, 117, 77, 127]

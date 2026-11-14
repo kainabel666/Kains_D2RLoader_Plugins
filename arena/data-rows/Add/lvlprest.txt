@@ -1,0 +1,3 @@
+Name	Def	LevelId	Populate	Logicals	Outdoors	Animate	KillEdge	FillBlanks	SizeX	SizeY	AutoMap	Scan	Pops	PopPad	Files	File1	File2	File3	File4	File5	File6	Dt1Mask
+Act 2 - Arena Tomb 1	1092	138	1	1	0	0	0	0	0	0	0	1	0	0	1	Arena/Tombs/dm2.ds1	0	0	0	0	0	447
+Act 2 - Arena Tomb 2	1093	139	1	1	0	0	0	0	0	0	0	1	0	0	1	Arena/Tombs/dm3.ds1	0	0	0	0	0	6591
