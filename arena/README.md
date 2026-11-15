@@ -12,21 +12,52 @@ Arena brings the two cut arenas of Diablo II 1.10 back as a PvP playground for m
 
 ## Install
 
-Arena is a mod for D2RLoader. It comes as a mod folder (`arena`) with the plugin, its settings and its data.
+Arena is a plugin for **D2RLoader**. You add it to a D2RLoader mod: one you already play, or a new one you create
+for it. Every player in a game needs the same mod with arena in it.
 
-1. Copy the `arena` folder into `Diablo II Resurrected\mods\`.
-2. Start D2RLoader with the arena mod (pick it in the launcher, or start with `-mod arena`).
-3. The first start writes the settings file `mods\arena\d2rloader\config\arena.toml`. Restart the game after you change it.
-4. Type `arena` in the in-game console to check that the plugin is running.
+### What's in the zip
 
-Every player needs the same mod. The arenas only exist in multiplayer (TCP/IP) games: in single player there are no
-arena trapdoors or obelisks.
+```
+arena\
+  README.md                     this file
+  plugins\d2rl-arena.dll        the plugin
+  config\arena.toml             the settings, with their defaults
+  data\                         the arena maps, HD graphics, scoreboard art and strings
+  data-rows\
+    Replace\                    5 complete game tables with arena's rows in them
+    Add\                        only arena's rows, to append to tables your mod already changes
+```
 
-Characters of this mod are saved in their own folder (`arena`), so your other characters don't show up there.
+### Where the files go
 
-**Adding arena to your own mod?** See **Your data** below: copy the ready tables from `data-rows\Replace` if your mod
-uses the vanilla tables, or append the rows from `data-rows\Add` to your own tables and set the new ids in
-`arena.toml`.
+A D2RLoader mod lives in `Diablo II Resurrected\mods\<YourMod>\` and has two parts:
+
+- `<YourMod>\<YourMod>.mpq\data\` – the mod's game data (the same layout as the zip's `data` folder);
+- `<YourMod>\d2rloader\` – D2RLoader's files for the mod (`plugins`, `config`, ...).
+
+Below, `<YourMod>` is the folder name of your mod.
+
+### Steps
+
+1. **Plugin:** copy `plugins\d2rl-arena.dll` into `<YourMod>\d2rloader\plugins\`.
+2. **Settings:** copy `config\arena.toml` into `<YourMod>\d2rloader\config\`. (If you skip this, the plugin writes the
+   same file on its first start.)
+3. **Data:** copy the contents of the zip's `data` folder into `<YourMod>\<YourMod>.mpq\data\`. Two of these files
+   may already exist in your mod. If they do, don't copy over them; add arena's entries to yours instead:
+   - `data\hd\objects\objects.json` – arena's entries for `arena_trapdoor_1`, `arena_trapdoor_2` and `arena_lobby`;
+   - `data\local\lng\strings\levels.json` – arena's seven strings: `ArenaTomb1Name`, `ArenaTomb1Warp`,
+     `ArenaTomb1Entry`, `ArenaTomb2Name`, `ArenaTomb2Warp`, `ArenaTomb2Entry` and `ArenaLobbyName`.
+4. **Game tables:** the arena needs rows in five tables of `<YourMod>\<YourMod>.mpq\data\global\excel\`
+   (`itemstatcost.txt`, `levels.txt`, `lvlprest.txt`, `lvltypes.txt`, `objects.txt`):
+   - **Your mod doesn't change these five tables** (they are missing from its `excel` folder, or are the game's
+     originals): copy the five files from `data-rows\Replace` into that `excel` folder. Done, nothing to
+     change in `arena.toml`.
+   - **Your mod already changes some of them:** don't copy the `Replace` files over yours. Append arena's rows from
+     `data-rows\Add` instead and set the new ids in `arena.toml`, step by step in **Your data** below.
+5. **Start** D2RLoader with your mod and type `arena` in the in-game console to check that the plugin is running.
+   Restart the game whenever you change `arena.toml`.
+
+The arenas only exist in multiplayer (TCP/IP) games: in single player there are no arena trapdoors or obelisks.
 
 ## How it works
 
@@ -141,36 +172,12 @@ max_gold = 0
 
 ## Your data
 
-The arena mod ships everything the plugin needs, so you can play it as it is. This section is for adding arena to
-another mod.
+You only need this section if your mod already changes one of the five tables (Install, step 4, second case).
 
-Arena's files for that are in the `data-rows` folder:
-
-- **`Replace`** – the five tables arena changes, complete: `itemstatcost.txt`, `levels.txt`, `lvlprest.txt`,
-  `lvltypes.txt` and `objects.txt`, each the vanilla table with arena's rows added and its edits made.
-- **`Add`** – only the rows arena adds (`itemstatcost.txt`, `levels.txt`, `lvlprest.txt`, `objects.txt`), each file with
-  the table's header line.
-
-Pick the way that fits your mod.
-
-### A. Your mod uses the vanilla tables
-
-If your mod doesn't change these five tables (or you start a new mod just for arena):
-
-1. Copy the five files from `data-rows\Replace` into your mod's `data\global\excel` folder.
-2. Copy arena's other files (see **Other files** below).
-3. Put `d2rl-arena.dll` into your mod's `d2rloader\plugins` folder.
-
-Nothing else to change: the ids in these tables match the defaults in `arena.toml`.
-
-### B. Your mod already changes some of these tables
-
-Then don't copy the `Replace` files over yours. Instead:
-
-1. **Append** the rows from each file in `data-rows\Add` to the end of your table of the same name (skip the header
-   line).
-2. **Number** the new rows. In another mod they usually land on other ids, so give each new row the next free number
-   in its table's id column, continuing your table's numbering. Write down every new id:
+1. **Append** the rows from each file in `data-rows\Add` to the end of your table of the same name in
+   `<YourMod>.mpq\data\global\excel\` (skip the header line).
+2. **Number** the new rows. Give each one the next free number in its table's id column, continuing your table's
+   numbering, and write the numbers down:
 
    | Table | Id column | Arena's rows | Ids in the arena mod |
    |---|---|---|---|
@@ -179,8 +186,8 @@ Then don't copy the `Replace` files over yours. Instead:
    | objects.txt | `*ID` | arena_trapdoor_1, arena_trapdoor_2, arena_lobby | 587, 588, 589 |
    | itemstatcost.txt | `*ID` | arena_stake, arena_winnings | 368, 369 |
 
-3. **Link the presets to the levels:** in your lvlprest.txt, set `LevelId` of the two arena rows to the new levels.txt
-   ids of Arena Tomb 1 and Arena Tomb 2.
+3. **Link the presets to the levels:** in lvlprest.txt, set `LevelId` of the two arena rows to your new levels.txt ids
+   of Arena Tomb 1 and Arena Tomb 2.
 4. **Make arena's four edits to existing rows** in your tables (they are not in the `Add` files):
 
    | Table | Row | Edit |
@@ -188,8 +195,8 @@ Then don't copy the `Replace` files over yours. Instead:
    | objects.txt | TeleportPad1, TeleportPad3, TeleportPad4 | `AutoMap` = 339 (the arena gates show the red portal marker on the automap) |
    | lvltypes.txt | Act 2 - Tomb | `File 12` = `Act2/Outdoors/Mesa.dt1`, `File 13` = `Act1/Graveyard/graveyrd.dt1` (used by Arena Tomb 2) |
 
-5. **Update `arena.toml`** with your new ids. Start the game once so the plugin writes the file, then change these
-   lines (shown here with the arena mod's ids):
+5. **Set your ids in `<YourMod>\d2rloader\config\arena.toml`.** These are the lines to change, shown with the arena
+   mod's ids:
 
    ```toml
    [arena.wager]
@@ -203,37 +210,20 @@ Then don't copy the `Replace` files over yours. Instead:
    # four numbers per trapdoor: x, y, arena level id, trapdoor object id
    trapdoors = [5050, 5179, 138, 587, 5035, 5116, 139, 588]
    #                        ^^^  ^^^              ^^^  ^^^
-   #           your Arena Tomb 1 id, arena_trapdoor_1 id / your Arena Tomb 2 id, arena_trapdoor_2 id
+   #   your Arena Tomb 1 id, arena_trapdoor_1 id / your Arena Tomb 2 id, arena_trapdoor_2 id
 
    [arena.level.138]     # rename to your Arena Tomb 1 id; keep the lines below it
    [arena.level.139]     # rename to your Arena Tomb 2 id; keep the lines below it
    ```
 
-6. Copy arena's other files and put `d2rl-arena.dll` into your mod's `d2rloader\plugins` folder, as in way A.
-7. Restart the game.
+6. Restart the game.
 
 Two rules for the wager stats: `arena_stake` and `arena_winnings` must stay saved stats (`Saved` 1, `CSvBits` 25, as in
 the `Add` file), and `stake_stat` / `winnings_stat` must never point at a row another stat uses, because arena writes
 gold amounts into them. If you turn wagers off (`[arena.wager] enabled = false`), you can leave the two wager rows out.
 
-### Other files
-Copy these folders from `arena.mpq\data` into your mod's `data` folder:
-
-- `global\tiles\arena\` – the two arena maps.
-- `hd\env\preset\arena\`, `hd\env\biome\arena_*.json`, `hd\env\vis\arena_tomb_*.json`, `hd\env\texture\terrain\arena\` –
-  the arenas in HD graphics.
-- `hd\objects\doors\arena_trapdoor_*.json`, `hd\objects\env_pillars\arena_lobby.json` – the entrance trapdoors and the
-  obelisk in HD.
-- `hd\global\ui\panel\arena\` – the scoreboard art.
-
-Two files may already exist in your mod. If they do, merge arena's entries into yours instead of copying over:
-
-- `hd\objects\objects.json` – arena's entries for `arena_trapdoor_1`, `arena_trapdoor_2` and `arena_lobby`.
-- `local\lng\strings\levels.json` – arena's seven strings: `ArenaTomb1Name`, `ArenaTomb1Warp`, `ArenaTomb1Entry`,
-  `ArenaTomb2Name`, `ArenaTomb2Warp`, `ArenaTomb2Entry` and `ArenaLobbyName`.
-
 Arena's rows name their strings as `d2rloader-mod:...`. If your mod uses another string namespace (the `namespace` in
-your mod's `d2rloader\metadata.json`), change `d2rloader-mod` to yours in those rows.
+`<YourMod>\d2rloader\metadata.json`), change `d2rloader-mod` to yours in those rows.
 
 ## Notes and limits
 
